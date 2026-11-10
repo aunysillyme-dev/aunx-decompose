@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1
+
+- `--plan` accepts its own `--json` output, with or without `--apply-patch`, so picks can be added to a saved plan and checked again. Unknown fields are still rejected.
+- A split that adds a review child now gates every reader of the split unit on that review.
+- Parallel top-level writers in one wave get the `split-worktrees` shape, not `single`.
+- Warnings for an output no unit reads and for a gated map with no invalidator. Warnings never change the exit code.
+- When the advisor gate fires, the checker prints one question per trigger, naming the units and the metric.
+- SKILL.md: the reviewer runs on a different model family from the map's author, and a single-model setup skips the picking step.
+
 ## 0.3.0
 
 - Multi-agent skill installs: repeat `--agent` for Claude Code, Codex, Gemini CLI, Cursor, OpenCode, Copilot CLI and Qwen Code, or use `--agent all`. User and project installs support `--force` per destination.

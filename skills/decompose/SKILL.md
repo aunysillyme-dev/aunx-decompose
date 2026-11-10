@@ -189,7 +189,10 @@ can; the rest are yours to apply.
    read by 3 or more others. Give the reviewer the ask and the map, and ask for
    four things: a granularity ledger (is each unit as small as it can be, with
    its own input, output and verifier), one better way to frame the task,
-   every mistake it finds, and a patch. Patch operations are `split`,
+   every mistake it finds, and a patch. Pass along the `Advisor questions`
+   the helper prints: each names the units and the metric that tripped the
+   gate. The reviewer runs on a different model family from the one that
+   wrote the map. Patch operations are `split`,
    `cut_edges`, `retier`, `dispatch` and `needs`. A missing edge cannot be
    patched: rebuild the map. Apply the patch with `--apply-patch`; it is all
    or nothing.
@@ -199,7 +202,8 @@ can; the rest are yours to apply.
    spread model families within the plan, set effort separately from the
    speed tier, and give each unit the smallest machine that fits unless it is
    marked `needs.scale_up`. Record the choice in `model`, `machine` and
-   `runner_up`.
+   `runner_up`. With only one model available, skip this step and record that
+   model on every unit.
 
 9. **Report the plan.** Print the table, the waves, the critical path and the
    clause coverage, then name each pick and its runner-up.
@@ -235,7 +239,11 @@ python3 "${CLAUDE_PLUGIN_ROOT}/skills/decompose/scripts/decompose.py" --plan "$p
 python3 "${CLAUDE_PLUGIN_ROOT}/skills/decompose/scripts/decompose.py" --plan "$plan_file" --json
 ```
 
-Exit 0 prints the plan; exit 2 lists every error. When the output says
+Exit 0 prints the plan; exit 2 lists every error. `Warnings` never change the
+exit code: an output no unit reads (outputs of the final units are exempt), or
+a map that needs the advisor but has no invalidator. Save the `--json` output,
+add your picks to it and run `--plan` on it again: computed fields are dropped
+on load. When the output says
 `Advisor review: REQUIRED`, get the review, write its JSON to a new file in
 the same temporary directory, and apply it:
 
