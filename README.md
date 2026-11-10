@@ -4,7 +4,7 @@
 
 ![A 14-second tour of Decompose: the ask split into clauses, units grouped into parallel waves by real data edges, the checker printing PLAN valid with the advisor gate and critical path, the checks that reject bad plans, and the closing card with the npm install command.](https://raw.githubusercontent.com/aunysillyme-dev/aunx-decompose/main/docs/aunx-decompose-trailer.gif)
 
-Decompose is a Claude Code plugin and agent skill that breaks a task into the smallest units that can each be checked, and shows which units can run at the same time. Claude writes the plan. A Python helper that uses only the standard library checks it. Python 3.8+ is enough. No API keys or Python packages needed.
+Decompose is a plugin and agent skill that breaks a task into the smallest units that can each be checked, and shows which units can run at the same time. It installs in Claude Code, Codex CLI, Gemini CLI, Cursor, GitHub Copilot CLI, OpenCode, Qwen Code and Hermes Agent. Your agent writes the plan. A Python helper that uses only the standard library checks it. Python 3.8+ is enough. No API keys or Python packages needed.
 
 Version 0.2.0 adds **unit maps**, a fuller planning method:
 
@@ -26,37 +26,52 @@ Use it when a task has several steps, some can run in parallel, more than one ag
 
 ## Install
 
-Claude Code:
+One repository, one skill, a wrapper for each agent. Pick yours:
+
+| Agent | Install |
+|---|---|
+| Claude Code | `claude plugin marketplace add aunysillyme-dev/aunx-skills` then `claude plugin install aunx-decompose@aunx` |
+| Codex CLI | `codex plugin marketplace add aunysillyme-dev/aunx-decompose` then `codex plugin add aunx-decompose@aunx-decompose` |
+| Gemini CLI | `gemini extensions install https://github.com/aunysillyme-dev/aunx-decompose` |
+| GitHub Copilot CLI | `copilot plugin install aunysillyme-dev/aunx-decompose` |
+| Cursor | `cursor-agent plugin marketplace add https://github.com/aunysillyme-dev/aunx-decompose`, then install it from Customize, Plugins |
+| OpenCode | `npx aunx-decompose install --agent opencode` |
+| Qwen Code | `npx aunx-decompose install --agent qwen` |
+| Hermes Agent | `hermes plugins install aunx-decompose` then `hermes plugins enable aunx-decompose` (once the catalog lists it) |
+
+### Skill only, from npm
+
+`npx aunx-decompose install` copies the skill into an agent's skills folder. It defaults to Claude Code. Name another agent with `--agent`, repeat the flag for several, or use `all`:
 
 ```
-claude plugin marketplace add aunysillyme-dev/aunx-skills
-claude plugin install aunx-decompose@aunx
+npx aunx-decompose install --agent codex
+npx aunx-decompose install --agent gemini --agent cursor
+npx aunx-decompose install --agent all
 ```
 
-From npm, as a standalone skill copied to `~/.claude/skills/decompose` (add `--project` for `./.claude/skills`):
+| `--agent` | User folder | With `--project` |
+|---|---|---|
+| `claude` | `~/.claude/skills` | `.claude/skills` |
+| `codex` | `~/.agents/skills` | `.agents/skills` |
+| `gemini` | `~/.gemini/skills` | `.gemini/skills` |
+| `cursor` | `~/.cursor/skills` | `.cursor/skills` |
+| `opencode` | `~/.config/opencode/skills` | `.opencode/skills` |
+| `copilot` | `~/.copilot/skills` | `.github/skills` |
+| `qwen` | `~/.qwen/skills` | `.qwen/skills` |
 
-```
-npx aunx-decompose install
-```
+`--force` replaces an existing copy. `npx aunx-decompose check --plan plan.json` runs the checker without installing anything.
 
-From [skills.sh](https://skills.sh/aunysillyme-dev/aunx-skills/decompose), for Claude Code, Codex, Cursor and other agents:
+### From skills.sh
 
 ```
 npx skills add aunysillyme-dev/aunx-skills --skill decompose
 ```
 
-`npx aunx-decompose check --plan plan.json` runs the checker without installing anything.
+Listed at [skills.sh](https://skills.sh/aunysillyme-dev/aunx-skills/decompose). The CLI asks which agent to install into.
 
-Hermes Agent (from the plugin catalog, once listed):
+### Use it
 
-```
-hermes plugins install aunx-decompose
-hermes plugins enable aunx-decompose
-```
-
-Use `/decompose <task>` (namespaced as `/decompose:decompose` in Claude Code),
-or ask the agent to split a task into steps, plan dependencies, or check write-path
-overlap. The plugin plans work and does not execute the plan.
+Type `/decompose <task>` in Claude Code (namespaced as `/decompose:decompose`), Gemini CLI and Hermes, `$decompose` in Codex, or ask any agent to split a task into steps, plan dependencies, or check write-path overlap. Decompose plans work and does not execute the plan.
 
 ## Unit map example
 
@@ -238,11 +253,11 @@ Two steps that write to the same file, or to a parent and a child path. Paths ar
 
 ### Which agents does it support?
 
-Claude Code as a plugin. Hermes Agent packaging is included, and its catalog listing is pending. As a standalone skill from npm or skills.sh, any agent that reads SKILL.md files and can run Python 3.8 can use it, including Codex, Cursor and Gemini CLI. Only Claude Code is tested here.
+Claude Code, Codex CLI, Gemini CLI, Cursor and GitHub Copilot CLI as a plugin or extension, and OpenCode and Qwen Code as a skill. Hermes Agent packaging is included, and its catalog listing is pending. Any other agent that reads SKILL.md files and can run Python 3.8 can use the skill too. The Claude Code, Codex CLI and Gemini CLI packages are validated with each agent's own CLI. The others follow each agent's published format.
 
 ### How do I install it with npm or skills.sh?
 
-Run `npx aunx-decompose install` to copy the skill to `~/.claude/skills/decompose`, or `npx skills add aunysillyme-dev/aunx-skills --skill decompose` to install it from skills.sh into the agent you pick. Both install the same skill as the plugin.
+Run `npx aunx-decompose install` to copy the skill to `~/.claude/skills/decompose`, add `--agent <name>` for Codex, Gemini CLI, Cursor, OpenCode, Copilot CLI or Qwen Code, or run `npx skills add aunysillyme-dev/aunx-skills --skill decompose` to install it from skills.sh into the agent you pick. All of them install the same skill as the plugin.
 
 ### How is it different from plan mode or a to-do list?
 
@@ -253,8 +268,9 @@ Plan mode and to-do lists hold a plan. Decompose checks one: a script rejects cy
 From the repository root:
 
 ```bash
-python3 -m unittest discover -s tests -p test_decompose_plugin.py
+python3 -m unittest discover -s tests -p 'test_*.py'
 claude plugin validate .
+gemini extensions validate .
 ```
 
 For local use without a marketplace install, launch

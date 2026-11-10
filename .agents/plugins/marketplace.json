@@ -1,0 +1,16 @@
+{
+  "name": "aunx-decompose",
+  "owner": {
+    "name": "AunySillyMe"
+  },
+  "metadata": {
+    "version": "0.3.0"
+  },
+  "plugins": [
+    {
+      "name": "aunx-decompose",
+      "source": "./",
+      "version": "0.3.0"
+    }
+  ]
+}
