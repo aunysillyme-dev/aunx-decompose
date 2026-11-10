@@ -31,6 +31,8 @@ NAME = re.compile(r"[A-Za-z0-9_.-]+")
 REQUIRED = ("id", "type", "speed", "clause_ids", "inputs", "outputs", "deps", "paths", "verify")
 OPTIONAL = ("parent_id", "importance", "is_invalidator", "item_count", "dispatch_hint", "needs",
             "irreversible", "context_tokens", "model", "machine", "runner_up", "effort", "note")
+COMPUTED_PLAN_KEYS = {"advisor", "waves", "critical_path", "coverage", "steps", "patched"}
+COMPUTED_UNIT_KEYS = {"wave", "parallel_group", "downstream_readers", "shape", "shape_reason"}
 NEEDS_NUMBERS = ("cpu", "ram_gb", "disk_gb", "minutes")
 NEEDS_FLAGS = ("gpu", "scale_up", "local_only")
 PATCH_OPS = ("split", "cut_edges", "retier", "dispatch", "needs")
@@ -64,7 +66,7 @@ def normalize(data):
         data = {"units": data}
     if not isinstance(data, dict):
         raise ValueError("plan must be an object or an array of units")
-    extra = set(data) - {"ask", "clauses", "units"}
+    extra = set(data) - {"ask", "clauses", "units"} - COMPUTED_PLAN_KEYS
     if extra:
         raise ValueError("unknown plan field: " + sorted(extra)[0])
     clauses = data.get("clauses")
@@ -91,7 +93,11 @@ def normalize(data):
         raise ValueError("plan needs clauses: the numbered parts of the ask")
     if not clauses:
         raise ValueError("plan needs at least one clause")
-    return {"ask": data.get("ask", ""), "clauses": clauses, "units": data.get("units")}
+    units = data.get("units")
+    if isinstance(units, list):
+        units = [{k: v for k, v in unit.items() if k not in COMPUTED_UNIT_KEYS}
+                 if isinstance(unit, dict) else unit for unit in units]
+    return {"ask": data.get("ask", ""), "clauses": clauses, "units": units}
 
 
 def _unit_errors(unit, errors):
@@ -464,8 +470,12 @@ def apply_patch(plan, advice):
             raise ValueError("split: children must produce every output of " + parent["id"])
         for unit in units:
             if parent["id"] in unit.get("deps", []):
-                feeders = [c["id"] for c in made if set(c["outputs"]) & set(unit["inputs"])]
+                feeders = [c["id"] for c in made if c["type"] == "review" or
+                           set(c["outputs"]) & set(unit["inputs"])]
                 unit["deps"] = [d for d in unit["deps"] if d != parent["id"]] + feeders
+                for child in made:
+                    if child["type"] == "review":
+                        unit["inputs"].extend(o for o in child["outputs"] if o not in unit["inputs"])
         at = index(parent["id"])
         units[at:at + 1] = made
     for op in patch.get("cut_edges", []):
