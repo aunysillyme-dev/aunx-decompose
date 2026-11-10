@@ -1,0 +1,224 @@
+{
+  "ask": "Compare three CSV parsers on speed and license, then recommend one.",
+  "clauses": [
+    {
+      "id": "C1",
+      "text": "compare on speed"
+    },
+    {
+      "id": "C2",
+      "text": "compare on license"
+    },
+    {
+      "id": "C3",
+      "text": "recommend one"
+    }
+  ],
+  "units": [
+    {
+      "id": "S1",
+      "type": "data",
+      "speed": "fast",
+      "clause_ids": [
+        "C1"
+      ],
+      "is_invalidator": true,
+      "inputs": [
+        "sample.csv"
+      ],
+      "outputs": [
+        "sample-ok"
+      ],
+      "deps": [],
+      "paths": [],
+      "verify": "the sample parses with the standard csv module",
+      "needs": {
+        "cpu": 1,
+        "ram_gb": 1,
+        "minutes": 1
+      }
+    },
+    {
+      "id": "S2.1",
+      "parent_id": "S2",
+      "type": "coding",
+      "speed": "standard",
+      "clause_ids": [
+        "C1"
+      ],
+      "inputs": [
+        "sample-ok"
+      ],
+      "outputs": [
+        "bench-alpha"
+      ],
+      "deps": [
+        "S1"
+      ],
+      "paths": [],
+      "verify": "the alpha benchmark script exits 0 and prints rows per second",
+      "needs": {
+        "cpu": 4,
+        "ram_gb": 8,
+        "minutes": 6,
+        "scale_up": true
+      }
+    },
+    {
+      "id": "S2.2",
+      "parent_id": "S2",
+      "type": "coding",
+      "speed": "standard",
+      "clause_ids": [
+        "C1"
+      ],
+      "inputs": [
+        "sample-ok"
+      ],
+      "outputs": [
+        "bench-beta"
+      ],
+      "deps": [
+        "S1"
+      ],
+      "paths": [],
+      "verify": "the beta benchmark script exits 0 and prints rows per second",
+      "needs": {
+        "cpu": 4,
+        "ram_gb": 8,
+        "minutes": 6,
+        "scale_up": true
+      }
+    },
+    {
+      "id": "S2.3",
+      "parent_id": "S2",
+      "type": "coding",
+      "speed": "standard",
+      "clause_ids": [
+        "C1"
+      ],
+      "inputs": [
+        "sample-ok"
+      ],
+      "outputs": [
+        "bench-gamma"
+      ],
+      "deps": [
+        "S1"
+      ],
+      "paths": [],
+      "verify": "the gamma benchmark script exits 0 and prints rows per second",
+      "needs": {
+        "cpu": 4,
+        "ram_gb": 8,
+        "minutes": 6,
+        "scale_up": true
+      }
+    },
+    {
+      "id": "S3.1",
+      "parent_id": "S3",
+      "type": "research",
+      "speed": "fast",
+      "clause_ids": [
+        "C2"
+      ],
+      "inputs": [
+        "alpha package page"
+      ],
+      "outputs": [
+        "license-alpha"
+      ],
+      "deps": [],
+      "paths": [],
+      "verify": "the license is quoted from alpha's own LICENSE file",
+      "needs": {
+        "minutes": 2,
+        "capabilities": [
+          "web"
+        ]
+      }
+    },
+    {
+      "id": "S3.2",
+      "parent_id": "S3",
+      "type": "research",
+      "speed": "fast",
+      "clause_ids": [
+        "C2"
+      ],
+      "inputs": [
+        "beta package page"
+      ],
+      "outputs": [
+        "license-beta"
+      ],
+      "deps": [],
+      "paths": [],
+      "verify": "the license is quoted from beta's own LICENSE file",
+      "needs": {
+        "minutes": 2,
+        "capabilities": [
+          "web"
+        ]
+      }
+    },
+    {
+      "id": "S3.3",
+      "parent_id": "S3",
+      "type": "research",
+      "speed": "fast",
+      "clause_ids": [
+        "C2"
+      ],
+      "inputs": [
+        "gamma package page"
+      ],
+      "outputs": [
+        "license-gamma"
+      ],
+      "deps": [],
+      "paths": [],
+      "verify": "the license is quoted from gamma's own LICENSE file",
+      "needs": {
+        "minutes": 2,
+        "capabilities": [
+          "web"
+        ]
+      }
+    },
+    {
+      "id": "S4",
+      "type": "writing",
+      "speed": "standard",
+      "clause_ids": [
+        "C3"
+      ],
+      "inputs": [
+        "bench-alpha",
+        "bench-beta",
+        "bench-gamma",
+        "license-alpha",
+        "license-beta",
+        "license-gamma"
+      ],
+      "outputs": [
+        "recommendation.md"
+      ],
+      "deps": [
+        "S2.1",
+        "S2.2",
+        "S2.3",
+        "S3.1",
+        "S3.2",
+        "S3.3"
+      ],
+      "paths": [],
+      "verify": "every claim cites a benchmark row or a license quote",
+      "needs": {
+        "minutes": 4
+      }
+    }
+  ]
+}

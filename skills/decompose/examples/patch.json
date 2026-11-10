@@ -1,0 +1,13 @@
+{
+  "granularity": {"ledger": [{"id": "S4", "input": "benchmarks and licenses", "output": "recommendation", "verifier": "citations", "atomic": false, "why": "drafting and checking citations are two outputs"}]},
+  "reframe": "none: the comparison is already split by library and by criterion",
+  "mistakes": [{"id": "S4", "kind": "other", "detail": "S4 drafts and checks its own citations in one unit", "fixed_by": "split:0"}],
+  "patch": {
+    "split": [{"id": "S4", "into": [
+      {"id": "S4.1", "outputs": ["recommendation.md"]},
+      {"id": "S4.2", "type": "review", "speed": "fast", "inputs": ["recommendation.md"], "deps": ["S4.1"],
+       "outputs": ["citation-check"], "verify": "every claim maps to a benchmark row or a license quote"}
+    ]}],
+    "retier": [{"id": "S1", "speed": "fast", "reason": "a one-line parse check"}]
+  }
+}

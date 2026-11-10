@@ -1,0 +1,56 @@
+{
+  "name": "aunx-decompose",
+  "version": "0.2.1",
+  "description": "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table. A skill and Claude Code plugin.",
+  "type": "module",
+  "license": "MIT",
+  "author": "AunySillyMe",
+  "bin": {
+    "aunx-decompose": "bin/aunx-decompose.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "skills",
+    "!**/__pycache__",
+    "commands",
+    ".claude-plugin",
+    "README.md",
+    "LICENSE",
+    "CREDITS.md",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aunysillyme-dev/aunx-decompose.git"
+  },
+  "homepage": "https://github.com/aunysillyme-dev/aunx-decompose#readme",
+  "bugs": {
+    "url": "https://github.com/aunysillyme-dev/aunx-decompose/issues"
+  },
+  "keywords": [
+    "agent-skills",
+    "claude-skills",
+    "claude-code",
+    "claude-code-plugin",
+    "task-decomposition",
+    "task-planning",
+    "dependency-graph",
+    "parallel-tasks",
+    "agent-planning",
+    "write-path-conflicts",
+    "cycle-detection",
+    "critical-path",
+    "advisor-review",
+    "model-selection",
+    "agent-skill",
+    "skill-md",
+    "skills-sh",
+    "ai-agents",
+    "parallel-waves",
+    "clause-coverage",
+    "planning"
+  ]
+}

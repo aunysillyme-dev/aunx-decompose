@@ -1,0 +1,84 @@
+{
+  "tools_by_kind": {
+    "frame": [],
+    "code": [],
+    "test-run": [],
+    "audit-needed": [],
+    "ship": [],
+    "reproduce": [],
+    "search": [
+      "web"
+    ],
+    "fetch": [
+      "web"
+    ],
+    "extract": [],
+    "synthesize": [],
+    "read": [],
+    "audit": []
+  },
+  "scopes": {
+    "frame": "Plan the changes by file and explain why.",
+    "reproduce": "Reproduce the reported issue and report evidence.",
+    "search": "Search for evidence and report findings.",
+    "fetch": "Fetch the requested sources and report their contents.",
+    "extract": "Extract the requested information.",
+    "synthesize": "Synthesize the supplied evidence.",
+    "read": "Read the supplied material and report findings.",
+    "audit": "Audit the supplied material and report findings.",
+    "test-run": "Run the specified tests and report results.",
+    "audit-needed": "Determine whether the change needs an audit.",
+    "ship": "Prepare the specified ship operation."
+  },
+  "build": {
+    "status": "active",
+    "kinds": [
+      "frame",
+      "code",
+      "test-run",
+      "audit-needed",
+      "ship"
+    ]
+  },
+  "fix": {
+    "status": "active",
+    "kinds": [
+      "reproduce",
+      "code",
+      "test-run"
+    ]
+  },
+  "research": {
+    "status": "active",
+    "kinds": [
+      "search",
+      "fetch",
+      "extract",
+      "synthesize"
+    ]
+  },
+  "read": {
+    "status": "active",
+    "kinds": [
+      "read",
+      "extract"
+    ]
+  },
+  "audit": {
+    "status": "active",
+    "kinds": [
+      "audit"
+    ]
+  },
+  "plan_defaults": {
+    "advisor_max_steps": 5,
+    "advisor_min_units": 12,
+    "advisor_serial_min_steps": 4,
+    "advisor_serial_ratio": 0.75,
+    "advisor_min_readers": 3,
+    "high_importance_readers": 3,
+    "agent_fanout_min": 10,
+    "bulk_prompt_min": 2,
+    "subagents_min": 4
+  }
+}

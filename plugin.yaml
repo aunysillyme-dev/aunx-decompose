@@ -1,0 +1,10 @@
+name: aunx-decompose
+version: 0.2.1
+description: "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table."
+author: AunySillyMe
+license: MIT
+homepage: https://github.com/aunysillyme-dev/aunx-decompose
+provides_tools: []
+provides_hooks: []
+requires_hermes: ">=0.19"
+tags: [task-decomposition, planning, dependencies, parallel-waves, validation, critical-path, advisor-review]
