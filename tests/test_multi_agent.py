@@ -194,7 +194,7 @@ class MultiAgentTests(unittest.TestCase):
 
     def test_json_manifest_versions(self):
         version = json.loads((ROOT / "package.json").read_text())["version"]
-        self.assertEqual(version, "0.3.0")
+        self.assertEqual(version, "0.3.1")
         for relative in MANIFESTS:
             with self.subTest(manifest=relative):
                 self.assert_manifest_version(ROOT / relative, version)
