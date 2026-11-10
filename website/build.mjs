@@ -32,10 +32,12 @@ function validatePages() {
   for (const page of pages) requireValue(page.title && page.description && page.h1 && page.sources.length, `Incomplete page: ${page.route}`);
 }
 
+const renderedSources = new Set(['README.md', 'CHANGELOG.md', 'skills/decompose/SKILL.md', 'commands/decompose.md']);
 function sourceRoutes() {
   const routes = new Map();
   for (const page of pages.filter(page => page.route !== '/')) {
-    for (const source of page.sources) if (!routes.has(source)) routes.set(source, page.route);
+    // Only files whose content is rendered on a page route to it; other sources link to the repository.
+    for (const source of page.sources) if (renderedSources.has(source) && !routes.has(source)) routes.set(source, page.route);
   }
   return routes;
 }
@@ -137,7 +139,16 @@ export function renderMarkdown(markdown, { source = 'README.md', ids = new Set()
     if (/^\s*(?:[-*]|\d+\.)\s+/.test(line)) {
       const ordered = /^\s*\d+\./.test(line), items = [];
       const pattern = ordered ? /^\s*\d+\.\s+/ : /^\s*[-*]\s+/;
-      while (index < lines.length && pattern.test(lines[index])) items.push(`<li>${inline(lines[index++].replace(pattern, ''))}</li>`);
+      while (index < lines.length && pattern.test(lines[index])) {
+        let text = lines[index++].replace(pattern, '');
+        // Wrapped continuation lines belong to the same item.
+        while (index < lines.length && /^\s{2,}\S/.test(lines[index]) && !/^\s*(?:[-*]|\d+\.|```)/.test(lines[index])) text += ` ${lines[index++].trim()}`;
+        items.push(`<li>${inline(text)}</li>`);
+        // A blank line between items does not end the list.
+        let next = index;
+        while (next < lines.length && lines[next].trim() === '') next++;
+        if (next > index && next < lines.length && pattern.test(lines[next])) index = next;
+      }
       blocks.push(`<${ordered ? 'ol' : 'ul'}>${items.join('')}</${ordered ? 'ol' : 'ul'}>`);
       continue;
     }
