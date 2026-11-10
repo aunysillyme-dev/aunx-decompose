@@ -48,7 +48,7 @@ class UnitMapRegressionTests(unittest.TestCase):
                 self.assertEqual(first.returncode, 0, first.stderr)
                 data = json.loads(first.stdout)
                 self.assertEqual(set(data), {"ask", "clauses", "units", "advisor", "waves",
-                                             "critical_path", "coverage", "steps", "patched"})
+                                             "critical_path", "coverage", "steps", "patched", "warnings", "questions"})
                 self.assertEqual(data["patched"], patched)
                 for row in data["units"]:
                     row.update(model="chosen-model", machine="chosen-machine", runner_up="alternate-model")
