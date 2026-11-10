@@ -32,7 +32,7 @@ function validatePages() {
   for (const page of pages) requireValue(page.title && page.description && page.h1 && page.sources.length, `Incomplete page: ${page.route}`);
 }
 
-const renderedSources = new Set(['README.md', 'CHANGELOG.md', 'skills/decompose/SKILL.md', 'commands/decompose.md']);
+const renderedSources = new Set(['README.md', 'CHANGELOG.md']);
 function sourceRoutes() {
   const routes = new Map();
   for (const page of pages.filter(page => page.route !== '/')) {
@@ -184,7 +184,7 @@ function docsBody(root, page, facts) {
   const ids = new Set(['main', 'page-title']);
   const source = page.key === 'changelog' ? 'CHANGELOG.md' : 'README.md';
   let body = `<p class="source-note">From <a href="${repository}/blob/main/${source}">${source}</a></p>` + renderMarkdown(markdown, { source, ids });
-  if (page.key === 'how') body += renderMarkdown(section(facts.skill, 'Unit maps: the full method'), { source: 'skills/decompose/SKILL.md', ids });
+  if (page.key === 'how') body += `<h2 id="full-method">The full method</h2><p>The skill file holds every step the agent follows, with the dispatch table and the plan schema.</p><p><a href="${repository}/blob/main/skills/decompose/SKILL.md">Read the full method in SKILL.md</a></p>`;
   if (page.key === 'how') body += `<h2 id="picking">Model and machine picks</h2><p>The helper never picks or calls a model or a machine. Picking is a written method for the agent.</p><p><a href="${repository}/blob/main/skills/decompose/references/picking.md">Read the picking method</a></p><h2 id="thresholds">Current recipe defaults</h2><pre><code>${escape(JSON.stringify(facts.recipes.plan_defaults, null, 2))}</code></pre>`;
   if (page.key === 'usage') body += `<h2 id="slash-command">Slash command wrapper</h2>${renderMarkdown(facts.command, { source: 'commands/decompose.md', ids })}`;
   return `<article class="markdown">${body}</article>`;
