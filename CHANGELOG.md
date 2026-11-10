@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- Multi-agent skill installs: repeat `--agent` for Claude Code, Codex, Gemini CLI, Cursor, OpenCode, Copilot CLI and Qwen Code, or use `--agent all`. User and project installs support `--force` per destination.
+- Added Gemini CLI extension and slash command, Codex plugin manifest, and Cursor plugin and marketplace. The Claude Code manifest also supports Copilot CLI.
+- Agent-neutral helper path guidance, matching plugin versions and npm package metadata, with the existing Claude Code, Hermes and skills.sh install paths preserved.
+
 ## 0.2.1
 
 - Published on npm as `aunx-decompose`. `npx aunx-decompose install` copies the skill to `~/.claude/skills/decompose`, and `npx aunx-decompose check` runs the checker.

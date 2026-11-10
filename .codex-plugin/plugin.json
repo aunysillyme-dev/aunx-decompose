@@ -1,0 +1,12 @@
+{
+  "name": "aunx-decompose",
+  "version": "0.3.0",
+  "description": "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table.",
+  "author": {
+    "name": "AunySillyMe"
+  },
+  "homepage": "https://github.com/aunysillyme-dev/aunx-decompose",
+  "repository": "https://github.com/aunysillyme-dev/aunx-decompose",
+  "license": "MIT",
+  "skills": "./skills/"
+}

@@ -9,9 +9,9 @@ Turn the user's task into explicit steps. This skill plans work; it does not
 execute the planned steps or grant permission to ship changes.
 
 The commands below reach the helper through `${CLAUDE_PLUGIN_ROOT}`, which the
-plugin sets. When this skill was installed on its own (with `npx skills add` or
-`npx aunx-decompose install`) and that variable is empty, start every command
-with `CLAUDE_PLUGIN_ROOT="<folder holding this SKILL.md>/../.."`.
+plugin sets under Claude Code and Hermes. Under any other agent, or with a
+skill-only install (with `npx skills add` or `npx aunx-decompose install`), start
+every command with `CLAUDE_PLUGIN_ROOT="<folder holding this SKILL.md>/../.."`.
 
 There are two forms. A **step plan** is a short list of steps with kinds, for
 simple tasks. A **unit map** is the full method below: the smallest units,

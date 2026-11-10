@@ -1,7 +1,7 @@
 {
   "name": "aunx-decompose",
-  "version": "0.2.1",
-  "description": "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table. A skill and Claude Code plugin.",
+  "version": "0.3.0",
+  "description": "Break a task into checkable units and parallel waves: typed units, data edges, clause coverage, an advisor gate and a plan table. A skill and plugin for Claude Code, Hermes, Codex, Gemini CLI, Cursor, OpenCode, Copilot CLI and Qwen Code.",
   "type": "module",
   "license": "MIT",
   "author": "AunySillyMe",
@@ -20,7 +20,13 @@
     "README.md",
     "LICENSE",
     "CREDITS.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "gemini-extension.json",
+    ".codex-plugin",
+    ".cursor-plugin",
+    ".agents",
+    "plugin.yaml",
+    "__init__.py"
   ],
   "repository": {
     "type": "git",
@@ -51,6 +57,12 @@
     "ai-agents",
     "parallel-waves",
     "clause-coverage",
-    "planning"
+    "planning",
+    "codex",
+    "gemini-cli",
+    "cursor",
+    "opencode",
+    "copilot-cli",
+    "qwen-code"
   ]
 }

@@ -1,13 +1,13 @@
 {
   "name": "aunx-decompose",
   "displayName": "Decompose",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table.",
   "author": {
     "name": "AunySillyMe"
   },
-  "homepage": "https://github.com/aunysillyme-dev/aunx-skills/tree/main/plugins/aunx-decompose",
-  "repository": "https://github.com/aunysillyme-dev/aunx-skills",
+  "homepage": "https://github.com/aunysillyme-dev/aunx-decompose",
+  "repository": "https://github.com/aunysillyme-dev/aunx-decompose",
   "license": "MIT",
   "keywords": [
     "claude-code",
