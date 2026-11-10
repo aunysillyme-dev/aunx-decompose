@@ -330,6 +330,7 @@ export function buildSite({ root = fileURLToPath(new URL('..', import.meta.url))
   for (const asset of assets) requireValue(existsSync(join(root, 'website/assets', asset)), `${live ? 'Live build' : 'Preview build'} asset missing: website/assets/${asset}. Supply the local asset before building.`);
   const output = resolve(outDir);
   requireValue(output !== resolve(root) && output !== resolve(root, 'website') && !resolve(root).startsWith(`${output}/`), 'Output must be a separate build directory');
+  requireValue(!output.startsWith(`${resolve(root)}/`) || output === resolve(root, 'website/dist') || output.startsWith(resolve(root, 'website/.red-fixtures-')), 'Output inside the repository must be website/dist');
   rmSync(output, { recursive: true, force: true });
   const write = (file, value) => { mkdirSync(dirname(join(output, file)), { recursive: true }); writeFileSync(join(output, file), value); };
   for (const { page, html } of documents) write(`${page.route.slice(1)}index.html`, html);

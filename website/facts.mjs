@@ -13,7 +13,8 @@ export function section(markdown, heading) {
   return lines.slice(start, end).join('\n').trim();
 }
 export function loadSourceFacts(root = rootDir) {
-  const read = file => readFileSync(join(root, file), 'utf8');
+  // Site copy carries no em dashes; source Markdown that has one renders with a comma instead.
+  const read = file => readFileSync(join(root, file), 'utf8').replace(/\s*\u2014\s*/g, ', ');
   const pkg = JSON.parse(read('package.json'));
   const readme = read('README.md');
   const lead = readme.split('\n\n').find(text => text.startsWith('Decompose is a plugin'));
