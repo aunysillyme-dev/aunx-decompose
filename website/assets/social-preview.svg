@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Decompose</title>
+  <desc id="description">Checkable units. Parallel waves. A plan a script can verify.</desc>
+  <defs><radialGradient id="glow"><stop stop-color="#123d22"/><stop offset="1" stop-color="#050806"/></radialGradient></defs>
+  <rect width="1200" height="630" fill="#050806"/>
+  <rect x="410" width="790" height="630" fill="url(#glow)"/>
+  <rect x="42" y="42" width="1116" height="546" fill="none" stroke="#20382a"/>
+  <path d="M82 126H1118M82 500H1118" stroke="#20382a"/>
+  <image x="82" y="66" width="36" height="36" xlink:href="avatar.png"/>
+  <text x="136" y="92" fill="#8ba996" font-family="monospace" font-size="18">AunySillyMe.dev / Decompose</text>
+  <text x="82" y="184" fill="#3df07a" font-family="monospace" font-size="16" letter-spacing="3">CHECKABLE UNITS AND PARALLEL WAVES</text>
+  <text x="78" y="286" fill="#e0f0e5" font-family="monospace" font-weight="500" font-size="88" letter-spacing="-4">Decompose</text>
+  <text x="82" y="356" fill="#b6cfbf" font-family="monospace" font-size="28">Break a task into checkable units.</text>
+  <text x="82" y="401" fill="#b6cfbf" font-family="monospace" font-size="28">See which can run at the same time.</text>
+  <text x="82" y="458" fill="#8ba996" font-family="monospace" font-size="20">Your agent writes the plan. A Python helper checks it.</text>
+  <text x="82" y="546" fill="#b6cfbf" font-family="monospace" font-size="22">npx aunx-decompose install</text>
+  <path d="M864 588h147" stroke="#268e49" stroke-width="4"/>
+  <path d="M1011 588h100" stroke="#3df07a" stroke-width="4"/>
+  <path d="M1111 588h47" stroke="#d6ffe4" stroke-width="4"/>
+</svg>
