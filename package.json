@@ -1,6 +1,6 @@
 {
   "name": "aunx-decompose",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Break a task into checkable units and parallel waves: typed units, data edges, clause coverage, an advisor gate and a plan table. A skill and plugin for Claude Code, Hermes, Codex, Gemini CLI, Cursor, OpenCode, Copilot CLI and Qwen Code.",
   "type": "module",
   "license": "MIT",

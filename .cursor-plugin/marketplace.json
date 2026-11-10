@@ -4,13 +4,13 @@
     "name": "AunySillyMe"
   },
   "metadata": {
-    "version": "0.3.0"
+    "version": "0.3.1"
   },
   "plugins": [
     {
       "name": "aunx-decompose",
       "source": "./",
-      "version": "0.3.0"
+      "version": "0.3.1"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "aunx-decompose",
   "displayName": "Decompose",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Break a task into the smallest checkable units and parallel waves: typed units, real data edges, clause coverage, an advisor gate and a plan table.",
   "author": {
     "name": "AunySillyMe"

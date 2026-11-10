@@ -1,5 +1,5 @@
 {
   "name": "aunx-decompose",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Break a task into checkable units and parallel waves with the decompose skill and command."
 }
