@@ -164,7 +164,7 @@ function docsBody(root, page, facts) {
   let markdown;
   const readme = facts.readme;
   if (page.key === 'overview') markdown = facts.lead + '\n\n' + ['When to use it', 'What it runs and writes'].map(h => section(readme, h)).join('\n\n');
-  else if (page.key === 'how') markdown = facts.method + '\n\n' + section(readme, 'Unit map example') + '\n\n' + section(facts.skill, 'Unit maps: the full method');
+  else if (page.key === 'how') markdown = facts.method + '\n\n' + section(readme, 'Unit map example');
   else if (page.key === 'install') markdown = section(readme, 'Install');
   else if (page.key === 'usage') markdown = ['Unit map example', 'Step plan example'].map(h => section(readme, h)).join('\n\n');
   else if (page.key === 'checks') markdown = [section(readme, 'Unit map example').slice(section(readme, 'Unit map example').indexOf('Unit map exit codes:')), section(readme, 'Step plan example').slice(section(readme, 'Step plan example').indexOf('Step plan exit codes:')), section(readme, 'Step kinds')].join('\n\n');
@@ -173,6 +173,7 @@ function docsBody(root, page, facts) {
   const ids = new Set(['main', 'page-title']);
   const source = page.key === 'changelog' ? 'CHANGELOG.md' : 'README.md';
   let body = `<p class="source-note">From <a href="${repository}/blob/main/${source}">${source}</a></p>` + renderMarkdown(markdown, { source, ids });
+  if (page.key === 'how') body += renderMarkdown(section(facts.skill, 'Unit maps: the full method'), { source: 'skills/decompose/SKILL.md', ids });
   if (page.key === 'how') body += `<h2 id="picking">Model and machine picks</h2><p>The helper never picks or calls a model or a machine. Picking is a written method for the agent.</p><p><a href="${repository}/blob/main/skills/decompose/references/picking.md">Read the picking method</a></p><h2 id="thresholds">Current recipe defaults</h2><pre><code>${escape(JSON.stringify(facts.recipes.plan_defaults, null, 2))}</code></pre>`;
   if (page.key === 'usage') body += `<h2 id="slash-command">Slash command wrapper</h2>${renderMarkdown(facts.command, { source: 'commands/decompose.md', ids })}`;
   return `<article class="markdown">${body}</article>`;
