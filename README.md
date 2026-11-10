@@ -37,7 +37,7 @@ One repository, one skill, a wrapper for each agent. Pick yours:
 | Cursor | `cursor-agent plugin marketplace add https://github.com/aunysillyme-dev/aunx-decompose`, then install it from Customize, Plugins |
 | OpenCode | `npx aunx-decompose install --agent opencode` |
 | Qwen Code | `npx aunx-decompose install --agent qwen` |
-| Hermes Agent | `hermes plugins install aunx-decompose` then `hermes plugins enable aunx-decompose` (once the catalog lists it) |
+| Hermes Agent | `hermes plugins install aunx-decompose` then `hermes plugins enable aunx-decompose` — [listed in the Hermes plugin catalog](https://hermes-agent.nousresearch.com/marketplace/aunx-decompose) |
 
 ### Skill only, from npm
 
@@ -253,7 +253,7 @@ Two steps that write to the same file, or to a parent and a child path. Paths ar
 
 ### Which agents does it support?
 
-Claude Code, Codex CLI, Gemini CLI, Cursor and GitHub Copilot CLI as a plugin or extension, and OpenCode and Qwen Code as a skill. Hermes Agent packaging is included, and its catalog listing is pending. Any other agent that reads SKILL.md files and can run Python 3.8 can use the skill too. The Claude Code, Codex CLI, Gemini CLI and Copilot CLI packages are installed and checked with each agent's own CLI. Cursor, OpenCode and Qwen Code follow each agent's published format.
+Claude Code, Codex CLI, Gemini CLI, Cursor and GitHub Copilot CLI as a plugin or extension, and OpenCode and Qwen Code as a skill. Hermes Agent packaging is included, and it is [listed in the Hermes plugin catalog](https://hermes-agent.nousresearch.com/marketplace/aunx-decompose). Any other agent that reads SKILL.md files and can run Python 3.8 can use the skill too. The Claude Code, Codex CLI, Gemini CLI and Copilot CLI packages are installed and checked with each agent's own CLI. Cursor, OpenCode and Qwen Code follow each agent's published format.
 
 ### How do I install it with npm or skills.sh?
 
