@@ -36,10 +36,10 @@ adds all of those at `https://decompose.aunysillyme.dev`. The 404 keeps noindex.
 Root `vercel.json` has no framework and no install command. It runs both the builder
 and checker, adding `--live` to each only when `SITE_LIVE=1`. Its CSP matches the
 reference resource policy, with additional standard security headers. The build output
-is `website/dist`. A Vercel project linked to this repository with production branch
-`main` can rebuild on every push. Project linking, environment setup, DNS and deployment
-are outside this build and have not been performed. Set `SITE_LIVE=1` only for the intended
-public deployment. No version or changelog edits in the website are needed for releases.
+is `website/dist`. The site is served at https://decompose.aunysillyme.dev from a Vercel
+project linked to this repository with production branch `main`, so every push to `main`
+rebuilds it. Compare `/build-info.json` on the site with the pushed commit to confirm a
+deploy. Set `SITE_LIVE=1` only for the intended public deployment. No version or changelog edits in the website are needed for releases.
 
 ## Assets and trailer handoff
 
