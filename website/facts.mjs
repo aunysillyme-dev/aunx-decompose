@@ -31,10 +31,62 @@ export function loadSourceFacts(root = rootDir) {
     picking: read('skills/decompose/references/picking.md'), recipes: JSON.parse(read('skills/decompose/recipes.json')) };
 }
 export function buildJsonLd(facts, { live = false } = {}) {
-  return { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Decompose',
-    description: facts.description, applicationCategory: 'DeveloperApplication', softwareRequirements: 'Python 3.8+',
-    license: 'https://github.com/aunysillyme-dev/aunx-decompose/blob/main/LICENSE',
-    url: 'https://decompose.aunysillyme.dev/', ...(live ? { sameAs: [facts.npm, 'https://github.com/aunysillyme-dev/aunx-decompose'] } : {}) };
+  const description = 'Open-source plugin and Python checker that splits complex prompts into numbered clauses, small verifiable units and parallel execution waves via npx.';
+  if (!live) {
+    return { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Decompose',
+      description, applicationCategory: 'DeveloperApplication', softwareRequirements: 'Python 3.8+',
+      license: 'https://spdx.org/licenses/MIT.html', url: 'https://decompose.aunysillyme.dev/' };
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareSourceCode',
+        '@id': 'https://decompose.aunysillyme.dev/#source',
+        name: facts.name,
+        description,
+        url: 'https://decompose.aunysillyme.dev/',
+        codeRepository: 'https://github.com/aunysillyme-dev/aunx-decompose',
+        programmingLanguage: ['Python', 'JavaScript'],
+        runtimePlatform: 'Python 3.8+, Node.js',
+        version: facts.version,
+        license: 'https://spdx.org/licenses/MIT.html',
+        author: { '@id': 'https://aunysillyme.dev/#person' },
+        sameAs: ['https://github.com/aunysillyme-dev/aunx-decompose', facts.npm]
+      },
+      {
+        '@type': 'SoftwareApplication',
+        '@id': 'https://decompose.aunysillyme.dev/#software',
+        name: 'Decompose',
+        description,
+        url: 'https://decompose.aunysillyme.dev/',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'macOS, Linux, Windows',
+        softwareRequirements: 'Python 3.8+',
+        softwareVersion: facts.version,
+        isAccessibleForFree: true,
+        license: 'https://spdx.org/licenses/MIT.html',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: { '@id': 'https://aunysillyme.dev/#person' },
+        sameAs: ['https://github.com/aunysillyme-dev/aunx-decompose', facts.npm]
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://aunysillyme.dev/#person',
+        name: 'Auny Hossain',
+        alternateName: ['Auny', 'AunySillyMe'],
+        url: 'https://aunysillyme.dev/',
+        sameAs: [
+          'https://www.aunysillyme.com/#person',
+          'https://aunysillyme.com/',
+          'https://github.com/aunysillyme',
+          'https://github.com/aunysillyme-dev',
+          'https://www.npmjs.com/~aunysillyme',
+          'https://x.com/AunySillyMe'
+        ]
+      }
+    ]
+  };
 }
 export function buildFaqJsonLd(facts) {
   return { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: facts.faq.map(row => ({

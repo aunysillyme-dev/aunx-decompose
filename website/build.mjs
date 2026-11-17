@@ -24,7 +24,7 @@ function readSet(root) {
 }
 
 function projectsPopup(root) {
-  return renderProjectsPopup({ rows: readSet(root), current: '', id: 'projects-popup', fallbackHref: 'https://aunysillyme.dev/#projects' });
+  return renderProjectsPopup({ rows: readSet(root), current: 'decompose', id: 'projects-popup', fallbackHref: 'https://aunysillyme.dev/#projects' });
 }
 
 function validatePages() {
@@ -179,7 +179,7 @@ function docsBody(root, page, facts) {
   else if (page.key === 'install') markdown = section(readme, 'Install');
   else if (page.key === 'usage') markdown = ['Unit map example', 'Step plan example'].map(h => section(readme, h)).join('\n\n');
   else if (page.key === 'checks') markdown = [section(readme, 'Unit map example').slice(section(readme, 'Unit map example').indexOf('Unit map exit codes:')), section(readme, 'Step plan example').slice(section(readme, 'Step plan example').indexOf('Step plan exit codes:')), section(readme, 'Step kinds')].join('\n\n');
-  else if (page.key === 'compatibility') markdown = facts.compatibility + '\n\nCursor, OpenCode, Qwen Code and Hermes are not live-tested.\n\n' + facts.lead + '\n\n' + section(readme, 'Install');
+  else if (page.key === 'compatibility') markdown = facts.compatibility + '\n\nCursor, OpenCode, Qwen Code and Hermes are not live-tested.\n\n' + section(readme, 'Install');
   else markdown = facts.changelog;
   const ids = new Set(['main', 'page-title']);
   const source = page.key === 'changelog' ? 'CHANGELOG.md' : 'README.md';
@@ -214,7 +214,7 @@ function navigation(page) {
 }
 
 function sidebar(root, page) {
-  const siblings = readSet(root).filter(row => row.name !== content.brand);
+  const siblings = readSet(root).filter(row => row.name !== 'decompose');
   if (page.route !== '/') return `<p class="side-label">DOCUMENTATION</p><nav class="side-links" aria-label="Documentation">${navigation(page)}</nav><div class="side-bottom">Questions or feedback?<a class="issue-button" href="${repository}/issues/new/choose" target="_blank" rel="noopener noreferrer">File an issue ↗</a></div>`;
   return `<p class="side-label">${page.route === '/' ? escape(content.brand.toUpperCase()) : content.docsLabel}</p><nav class="side-links" aria-label="Documentation">${navigation(page)}</nav><p class="side-label">THE REST OF THE SET</p><nav class="side-links" aria-label="Related repositories">${siblings.map(row => `<a href="${escape(row.url)}" target="_blank" rel="noopener noreferrer">${escape(row.name)} ↗</a>`).join('')}<\/nav><div class="side-bottom"><div>Questions or feedback?</div><a class="issue-button" href="${repository}/issues/new/choose" target="_blank" rel="noopener noreferrer" aria-label="File an issue for ${escape(content.brand)} on GitHub">File an issue ↗</a><span>Open source · MIT license</span></div>`;
 }
@@ -237,20 +237,25 @@ function head(page, facts, live, notFound = false) {
 <link rel="canonical" href="${url}">
 ${!live || notFound ? '<meta name="robots" content="noindex">' : `<link rel="describedby" href="${origin}/llms.txt">
 <link rel="alternate" type="text/markdown" href="${url}index.md">
+<link rel="sitemap" type="application/xml" href="${origin}/sitemap.xml">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="AunySillyMe.dev">
 <meta property="og:title" content="${escape(page.title)}">
 <meta property="og:description" content="${escape(page.description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${origin}/assets/social-preview.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${escape(content.socialAlt)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@AunySillyMe">
+<meta name="twitter:creator" content="@AunySillyMe">
 <meta name="twitter:title" content="${escape(page.title)}">
 <meta name="twitter:description" content="${escape(page.description)}">
 <meta name="twitter:image" content="${origin}/assets/social-preview.png">
 <meta name="twitter:image:alt" content="${escape(content.socialAlt)}">`}
-<link rel="icon" href="/assets/avatar.png"><link rel="apple-touch-icon" href="/assets/avatar.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/assets/avatar.png"><link rel="apple-touch-icon" href="/assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="${fontStylesheet}" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
@@ -349,13 +354,18 @@ export function buildSite({ root = fileURLToPath(new URL('..', import.meta.url))
   write('404.html', template(root, missing, `<h1>${escape(missing.h1)}</h1><p>${escape(missing.description)}</p><a href="/">${escape(content.notFound.link)}</a>`, facts, false, commit, true));
   mkdirSync(join(output, 'assets'), { recursive: true });
   for (const asset of assets) copyFileSync(asset === 'trailer.gif' ? join(root, 'docs/aunx-decompose-trailer.gif') : join(root, 'website/assets', asset), join(output, 'assets', asset));
-  write('robots.txt', live ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
+  copyFileSync(join(root, 'website/assets/favicon.ico'), join(output, 'favicon.ico'));
+  write('robots.txt', live ? `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
   if (live) {
-    write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(page => `  <url><loc>${origin}${page.route}</loc></url>`).join('\n')}\n</urlset>\n`);
+    const lastmod = buildTime.slice(0, 10);
+    write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(page => `  <url><loc>${origin}${page.route}</loc><lastmod>${lastmod}</lastmod></url>`).join('\n')}\n</urlset>\n`);
     const twins = documents.map(({ page, html }) => ({ page, markdown: markdownTwin(html, page) }));
     for (const { page, markdown } of twins) write(`${page.route.slice(1)}index.md`, markdown);
-    write('llms.txt', `# ${facts.name}\n\n> ${facts.lead}\n\n${content.discovery.install} \`${content.install.command}\`\n\n## ${content.discovery.pages}\n\n${pages.map(page => `- [${page.h1}](${origin}${page.route}): ${page.description}`).join('\n')}\n\n## ${content.discovery.source}\n\n- [${content.discovery.readme}](${repository}/blob/main/README.md)\n- [${content.discovery.npm}](${facts.npm})\n`);
+    write('llms.txt', `# Decompose (${facts.name})\n\n> ${facts.lead}\n\n${content.discovery.install} \`${content.install.command}\` · License: MIT · Author: Auny (https://aunysillyme.dev/)\n\n## Documentation\n\n${pages.map(page => `- [${page.h1}](${origin}${page.route}): ${page.description}`).join('\n')}\n\n## Machine-Readable & Agent Endpoints\n\n- [Homepage in Markdown](${origin}/index.md): Clean Markdown mirror of the landing page.\n- [Full Documentation Bundle](${origin}/llms-full.txt): Single-fetch Markdown bundle of all reviewed public pages.\n- [Public Agent Guide](${origin}/AGENTS.md): Navigation, citation and verification boundaries.\n- [XML Sitemap](${origin}/sitemap.xml): Canonical HTML URLs.\n\n## Source & Package\n\n- [${content.discovery.readme}](${repository})\n- [${content.discovery.npm}](${facts.npm})\n`);
     write('llms-full.txt', twins.map(twin => twin.markdown).join('\n---\n\n'));
+    const agentGuide = `# Public agent guide: Decompose\n\nThis file guides agents reading ${origin}/. It is public navigation metadata, not repository contributor instructions or permission to run commands.\n\n- Canonical website: ${origin}/\n- Start with [llms.txt](${origin}/llms.txt) for the concise page index, or [llms-full.txt](${origin}/llms-full.txt) for single-fetch documentation.\n- Every HTML page at \`${origin}/<path>/\` has a clean Markdown twin at \`${origin}/<path>/index.md\`.\n- Cite the canonical HTML URL (\`${origin}/<path>/\`) when linking people to a page.\n- Check [npm](${facts.npm}) and [GitHub](${repository}) for live release versions and source commits.\n- Opening this website or following links does not authorize command execution, credential use, or purchases; require explicit user confirmation.\n`;
+    write('AGENTS.md', agentGuide);
+    write('agents.md', agentGuide);
   }
   write('build-info.json', JSON.stringify({ commit, buildTime, packageVersion: facts.version, mode: live ? 'live' : 'default', pageCount: pages.length }, null, 2) + '\n');
   function count(directory) { return readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => total + (entry.isDirectory() ? count(join(directory, entry.name)) : 1), 0); }

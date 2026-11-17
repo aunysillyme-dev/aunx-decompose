@@ -56,9 +56,9 @@ function filesAt(root, prefix = '') {
 }
 
 export function expectedFiles(live = false) {
-  return [...pages.map(page => pageFile(page.route)), '404.html', 'robots.txt', 'build-info.json',
+  return [...pages.map(page => pageFile(page.route)), '404.html', 'favicon.ico', 'robots.txt', 'build-info.json',
     ...assets.map(asset => `assets/${asset}`),
-    ...(live ? ['sitemap.xml', 'llms.txt', 'llms-full.txt', ...pages.map(page => twinFile(page.route))] : []),
+    ...(live ? ['AGENTS.md', 'agents.md', 'sitemap.xml', 'llms.txt', 'llms-full.txt', ...pages.map(page => twinFile(page.route))] : []),
   ].sort();
 }
 
@@ -131,7 +131,7 @@ export function checkSite({ root = rootDir, dist = join(root, 'website/dist'), l
     const page = pages.find(page => pageFile(page.route) === file);
     if (page) check(tags('aside').some(side => parseHtml(side.inner).some(node => node.name === 'a' && node.attrs['aria-current'] && (page.route === '/' ? node.attrs.href === '#overview' : node.attrs.href === page.route))), file, 'missing current navigation');
     const popup = nodes.find(node => (node.attrs.class || '') === 'projects-popup__list');
-    check(popup && !popup.inner.includes('(current)') && !popup.inner.includes('>decompose<'), file, 'Decompose must not be added to pinned project set');
+    check(popup && popup.inner.includes('(current)') && popup.inner.includes('href="https://decompose.aunysillyme.dev"'), file, 'Decompose must be marked current in project popup');
   }
   const landing = documents.get('index.html');
   const versions = landing?.nodes.filter(node => 'data-version' in node.attrs || 'data-release-version' in node.attrs) || [];

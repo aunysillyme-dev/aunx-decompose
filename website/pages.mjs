@@ -1,13 +1,13 @@
 // Sources are read on every build. No generated product documentation is checked in.
-const page = (key, route, h1, description, sources) => ({ key, route, h1, title: `${h1} | Decompose`, description, sources });
+const page = (key, route, h1, title, description, sources) => ({ key, route, h1, title, description, sources });
 export const pages = [
-  page('landing', '/', 'Decompose', 'Break a task into the smallest units that can each be checked, and show which units can run at the same time.', ['README.md', 'package.json', 'CHANGELOG.md']),
-  page('overview', '/docs/overview/', 'Overview', 'What Decompose does, when to use it and what it runs and writes.', ['README.md']),
-  page('how', '/docs/how-it-works/', 'How it works', 'Clauses, units, real data edges, parallel waves, the critical path and the advisor gate.', ['README.md', 'skills/decompose/SKILL.md', 'skills/decompose/references/picking.md', 'skills/decompose/recipes.json']),
-  page('install', '/docs/install/', 'Install', 'Install with npm, agent plugins or skills.sh, with user and project skill destinations.', ['README.md']),
-  page('usage', '/docs/usage/', 'Usage', 'Use unit maps, step plans and the bundled slash command.', ['README.md', 'commands/decompose.md']),
-  page('checks', '/docs/checks/', 'Checks and exit codes', 'Validation, write-path overlap checks and unit map and step plan exit codes.', ['README.md', 'skills/decompose/scripts/decompose.py', 'skills/decompose/scripts/unitmap.py']),
-  page('compatibility', '/docs/compatibility/', 'Compatibility', 'Agent packaging, CLI-checked coverage and requirements.', ['README.md', 'package.json']),
-  page('changelog', '/docs/changelog/', 'Changelog', 'The current changelog read directly from the repository.', ['CHANGELOG.md']),
+  page('landing', '/', 'Decompose', 'Decompose: Task Planner & Wave Checker for AI Coding Agents', 'Open-source plugin and Python checker that splits complex prompts into numbered clauses, small verifiable units and parallel execution waves via npx.', ['README.md', 'package.json', 'CHANGELOG.md']),
+  page('overview', '/docs/overview/', 'Overview', 'Overview & When to Use It | Decompose', 'What aunx-decompose does, when to use unit maps versus simple step plans, and what its zero-dependency Python 3.8+ standard-library helper checks.', ['README.md']),
+  page('how', '/docs/how-it-works/', 'How it works', 'Clauses, Units, Parallel Waves & Advisor Gate | Decompose', 'How Decompose extracts prompt clauses, builds minimal checkable units, computes real data-dependency waves, finds critical paths and gates big plans.', ['README.md', 'skills/decompose/SKILL.md', 'skills/decompose/references/picking.md', 'skills/decompose/recipes.json']),
+  page('install', '/docs/install/', 'Install', 'Install via npm, Plugins or skills.sh | Decompose', 'Install aunx-decompose for Claude Code, Codex, Gemini CLI, Cursor or Copilot CLI via npx aunx-decompose install, native plugin manifests or skills.sh.', ['README.md']),
+  page('usage', '/docs/usage/', 'Usage', 'Unit Map, Step Plan & /decompose Usage | Decompose', 'Worked JSON and CLI examples for validating unit maps, simple step plans, reusable task recipes and the bundled /decompose slash command wrapper.', ['README.md', 'commands/decompose.md']),
+  page('checks', '/docs/checks/', 'Checks and exit codes', 'Validation Rules, Overlap Checks & Exit Codes | Decompose', 'Reference for Decompose validation gates: clause coverage, DAG cycle detection, parallel write-path overlap checks, step kinds and CLI exit codes.', ['README.md', 'skills/decompose/scripts/decompose.py', 'skills/decompose/scripts/unitmap.py']),
+  page('compatibility', '/docs/compatibility/', 'Compatibility', 'Supported AI Coding Agents & Packaging | Decompose', 'Agent compatibility matrix and CLI-tested packaging details for Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, Cursor, OpenCode and Qwen Code.', ['README.md', 'package.json']),
+  page('changelog', '/docs/changelog/', 'Changelog', 'Release Notes & Changelog | Decompose', 'Version history and release notes for aunx-decompose on npm and GitHub, tracking schema checks, agent plugin manifests and validator improvements.', ['CHANGELOG.md']),
 ];
 export default pages;
